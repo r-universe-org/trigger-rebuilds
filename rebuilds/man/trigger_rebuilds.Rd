@@ -4,11 +4,7 @@
 \alias{trigger_rebuilds}
 \title{Rebuild packages}
 \usage{
-trigger_rebuilds(
-  repository = "r-universe/r-lib",
-  workflow = "build.yml",
-  days = 30
-)
+trigger_rebuilds(repository, workflow = "build.yml", days = 30)
 }
 \arguments{
 \item{repository}{name of the github repository}
