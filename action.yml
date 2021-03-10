@@ -1,0 +1,11 @@
+name: 'Trigger rebuilds'
+description: 'Rebuild packages in the monorepo'
+inputs:
+  repository:
+    description: 'Name of the GitHub repository'
+    required: true
+runs:
+  using: 'docker'
+  image: 'docker://runiverse/trigger-rebuilds'
+  args:
+    - ${{ inputs.repository }}
