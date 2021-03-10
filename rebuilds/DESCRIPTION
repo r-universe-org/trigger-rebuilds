@@ -1,14 +1,15 @@
 Package: rebuilds
 Type: Package
-Title: Action to trigger rebuilds.
+Title: Action to trigger rebuilds
 Version: 1.0.0
 Author: Jeroen Ooms
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
-Description: Action to trigger rebuilds.
+Description: Trigger package rebuilds through manual workflow dispatch.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     gert (>= 1.2.0),
-    gh
+    gh,
+    jsonlite
 RoxygenNote: 7.1.1

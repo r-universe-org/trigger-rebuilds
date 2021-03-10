@@ -2,9 +2,16 @@
 % Please edit documentation in R/rebuilds.R
 \name{trigger_rebuilds}
 \alias{trigger_rebuilds}
+\alias{rebuild_vignettes}
 \title{Rebuild packages}
 \usage{
-trigger_rebuilds(repository, workflow = "build.yml", days = 30)
+trigger_rebuilds(
+  repository = "r-universe/jeroen",
+  workflow = "build.yml",
+  days = 30
+)
+
+rebuild_vignettes(universe = "jeroen")
 }
 \arguments{
 \item{repository}{name of the github repository}
@@ -12,6 +19,8 @@ trigger_rebuilds(repository, workflow = "build.yml", days = 30)
 \item{workflow}{name of the workflow to trigger}
 
 \item{days}{trigger rebuild every n days}
+
+\item{universe}{name of the universe, use NULL for all universes}
 }
 \description{
 Automatically trigger workflows once every n days.
