@@ -36,6 +36,24 @@ rebuild_vignettes <- function(universe = 'jeroen'){
   df
 }
 
+#' @export
+#' @param before date before which to rebuild
+#' @rdname rebuilds
+rebuild_oldies <- function(universe, before = '2021-03-01'){
+  subdomain <- paste(sprintf('%s.', universe), collapse = '')
+  endpoint <- sprintf('https://%sr-universe.dev/stats/checks', subdomain)
+  checks <- jsonlite::stream_in(url(endpoint), verbose = FALSE)
+  dates <- vapply(checks$runs, function(runs){
+    as.integer(runs$builder$date[1])
+  }, integer(1))
+  dates <- structure(dates, class = class(Sys.time()))
+  df <- checks[dates < as.POSIXct(before),]
+  for(i in seq_len(nrow(df))){
+    rebuild_one(paste0('r-universe/', universe), df$package[i])
+  }
+  df
+}
+
 #' @import gert
 package_stats <- function(monorepo){
   repo <- git_clone(monorepo, tempfile())

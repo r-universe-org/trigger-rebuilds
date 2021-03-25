@@ -3,6 +3,7 @@
 \name{trigger_rebuilds}
 \alias{trigger_rebuilds}
 \alias{rebuild_vignettes}
+\alias{rebuild_oldies}
 \title{Rebuild packages}
 \usage{
 trigger_rebuilds(
@@ -12,6 +13,8 @@ trigger_rebuilds(
 )
 
 rebuild_vignettes(universe = "jeroen")
+
+rebuild_oldies(universe, before = "2021-03-01")
 }
 \arguments{
 \item{repository}{name of the github repository}
@@ -21,6 +24,8 @@ rebuild_vignettes(universe = "jeroen")
 \item{days}{trigger rebuild every n days}
 
 \item{universe}{name of the universe, use NULL for all universes}
+
+\item{before}{date before which to rebuild}
 }
 \description{
 Automatically trigger workflows once every n days.
