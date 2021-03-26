@@ -39,7 +39,7 @@ rebuild_vignettes <- function(universe = 'jeroen'){
 #' @export
 #' @param before date before which to rebuild
 #' @rdname rebuilds
-rebuild_oldies <- function(universe, before = '2021-03-01'){
+rebuild_oldies <- function(universe, before = '2021-03-14'){
   subdomain <- paste(sprintf('%s.', universe), collapse = '')
   endpoint <- sprintf('https://%sr-universe.dev/stats/checks', subdomain)
   checks <- jsonlite::stream_in(url(endpoint), verbose = FALSE)

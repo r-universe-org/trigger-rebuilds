@@ -14,7 +14,7 @@ trigger_rebuilds(
 
 rebuild_vignettes(universe = "jeroen")
 
-rebuild_oldies(universe, before = "2021-03-01")
+rebuild_oldies(universe, before = "2021-03-14")
 }
 \arguments{
 \item{repository}{name of the github repository}
