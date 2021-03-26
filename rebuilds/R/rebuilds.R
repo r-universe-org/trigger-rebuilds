@@ -41,7 +41,7 @@ rebuild_vignettes <- function(universe = 'jeroen'){
 #' @rdname rebuilds
 rebuild_oldies <- function(universe, before = '2021-03-14'){
   subdomain <- paste(sprintf('%s.', universe), collapse = '')
-  endpoint <- sprintf('https://%sr-universe.dev/stats/checks', subdomain)
+  endpoint <- sprintf('https://%sr-universe.dev/stats/checks?limit=100000', subdomain)
   checks <- jsonlite::stream_in(url(endpoint), verbose = FALSE)
   dates <- vapply(checks$runs, function(runs){
     as.integer(runs$builder$date[1])
@@ -49,7 +49,7 @@ rebuild_oldies <- function(universe, before = '2021-03-14'){
   dates <- structure(dates, class = class(Sys.time()))
   df <- checks[dates < as.POSIXct(before),]
   for(i in seq_len(nrow(df))){
-    rebuild_one(paste0('r-universe/', universe), df$package[i])
+    rebuild_one(paste0('r-universe/', df$user[i]), df$package[i])
   }
   df
 }
