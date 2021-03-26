@@ -54,6 +54,19 @@ rebuild_oldies <- function(universe, before = '2021-03-14'){
   df
 }
 
+#' @export
+#' @rdname rebuilds
+delete_one <- function(universe, pkg){
+  userpwd <- Sys.getenv("CRANLIKEPWD", NA)
+  if(is.na(userpwd)) stop("No CRANLIKEPWD set, cannot deploy")
+  message("Deleting: ", pkg)
+  h <- curl::new_handle(customrequest = 'DELETE', userpwd = userpwd)
+  url <- sprintf("https://%s.r-universe.dev/packages/%s", universe, pkg)
+  res <- curl::curl_fetch_memory(url, handle = h)
+  out <- jsonlite::fromJSON(rawToChar(res$content))
+  stopifnot(out$Package == pkg)
+}
+
 #' @import gert
 package_stats <- function(monorepo){
   repo <- git_clone(monorepo, tempfile())
