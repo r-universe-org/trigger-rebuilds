@@ -5,6 +5,8 @@
 \alias{rebuild_vignettes}
 \alias{rebuild_oldies}
 \alias{delete_one}
+\alias{rebuild_all_remotes}
+\alias{rebuild_universe_remotes_only}
 \title{Rebuild packages}
 \usage{
 trigger_rebuilds(
@@ -18,6 +20,10 @@ rebuild_vignettes(universe = "jeroen")
 rebuild_oldies(universe, before = "2021-03-14")
 
 delete_one(universe, pkg)
+
+rebuild_all_remotes()
+
+rebuild_universe_remotes_only(universe)
 }
 \arguments{
 \item{repository}{name of the github repository}

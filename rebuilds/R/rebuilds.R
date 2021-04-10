@@ -81,3 +81,32 @@ rebuild_one <- function(repository, pkg, workflow = 'build.yml'){
   url <- sprintf('/repos/%s/actions/workflows/%s/dispatches', repository, workflow)
   gh(url, .method = 'POST', ref = 'master', inputs = list(package = pkg))
 }
+
+#' @export
+#' @rdname rebuilds
+rebuild_all_remotes <- function(){
+  universes <- gh('/orgs/r-universe/repos', .limit = Inf)
+  lapply(universes, function(x){
+    cat("Checking universe:", x$name, "\n")
+    rebuild_universe_remotes_only(x$name)
+  })
+}
+
+#' @export
+#' @rdname rebuilds
+rebuild_universe_remotes_only <- function(universe){
+  pkgs <- list_remote_packages(universe)
+  lapply(pkgs, function(pkg){
+    rebuild_one(paste0('r-universe/', universe), pkg = pkg)
+  })
+}
+
+list_remote_packages <- function(user){
+  tmp <- tempfile('.config')
+  on.exit(unlink(tmp))
+  url <- sprintf('https://raw.githubusercontent.com/r-universe/%s/master/.gitmodules', user)
+  curl::curl_download(url, tmp)
+  txt <- system(sprintf('git config --file %s --list', tmp), intern = T)
+  lines <- grep('registered=false', txt, fixed = TRUE, value = TRUE)
+  vapply(strsplit(lines, '.', fixed = TRUE), function(x){x[2]}, character(1))
+}
