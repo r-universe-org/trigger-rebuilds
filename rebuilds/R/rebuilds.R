@@ -7,7 +7,7 @@
 #' @param repository name of the github repository
 #' @param workflow name of the workflow to trigger
 #' @param days trigger rebuild every n days
-trigger_rebuilds <- function(repository = 'r-universe/jeroen', workflow = 'build.yml', days = 30){
+trigger_rebuilds <- function(repository = 'r-universe/jeroen', workflow = 'build.yml', days = 10){
   url <- sprintf('https://github.com/%s', repository)
   stats <- package_stats(monorepo = url)
   age <- unclass(Sys.Date() - as.Date(stats$modified))
