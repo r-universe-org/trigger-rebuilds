@@ -13,7 +13,7 @@ trigger_rebuilds <- function(repository = 'r-universe/jeroen', workflow = 'build
   age <- unclass(Sys.Date() - as.Date(stats$modified))
   select <- (age %/% days > 0) & (age %% days == 0)
   rebuilds <- stats[select,]
-  print(rebuilds)
+  print(rebuilds, n = Inf)
   for(pkg in rebuilds$file){
     rebuild_one(repository = repository, pkg = pkg, workflow = workflow)
   }
