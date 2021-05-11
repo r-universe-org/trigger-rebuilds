@@ -56,6 +56,19 @@ rebuild_oldies <- function(universe, before = '2021-03-14'){
 
 #' @export
 #' @rdname rebuilds
+rebuild_missing_binaries <- function(universe = 'ropensci'){
+  endpoint <- sprintf('https://%s.r-universe.dev', universe)
+  packages <- jsonlite::stream_in(url(paste0(endpoint, '/src/contrib')), verbose = FALSE)
+  macos <- jsonlite::stream_in(url(paste0(endpoint, '/bin/macosx/contrib/4.1')), verbose = FALSE)
+  missing <- which(!paste(packages$Package, packages$Version) %in% paste(macos$Package, macos$Version))
+  sapply(packages$Package[missing], function(pkg){
+    rebuild_one(paste0('r-universe/', universe), pkg)
+  })
+}
+
+#' @export
+#' @rdname rebuilds
+#' @param pkg name of package to delete
 delete_one <- function(universe, pkg){
   userpwd <- Sys.getenv("CRANLIKEPWD", NA)
   if(is.na(userpwd)) stop("No CRANLIKEPWD set, cannot deploy")

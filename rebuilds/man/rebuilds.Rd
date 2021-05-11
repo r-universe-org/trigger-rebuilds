@@ -4,6 +4,7 @@
 \alias{trigger_rebuilds}
 \alias{rebuild_vignettes}
 \alias{rebuild_oldies}
+\alias{rebuild_missing_binaries}
 \alias{delete_one}
 \alias{rebuild_all_remotes}
 \alias{rebuild_universe_remotes_only}
@@ -18,6 +19,8 @@ trigger_rebuilds(
 rebuild_vignettes(universe = "jeroen")
 
 rebuild_oldies(universe, before = "2021-03-14")
+
+rebuild_missing_binaries(universe = "ropensci")
 
 delete_one(universe, pkg)
 
@@ -35,6 +38,8 @@ rebuild_universe_remotes_only(universe)
 \item{universe}{name of the universe, use NULL for all universes}
 
 \item{before}{date before which to rebuild}
+
+\item{pkg}{name of package to delete}
 }
 \description{
 Automatically trigger workflows once every n days.
