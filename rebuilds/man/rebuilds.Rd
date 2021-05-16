@@ -13,7 +13,7 @@
 trigger_rebuilds(
   repository = "r-universe/jeroen",
   workflow = "build.yml",
-  days = 10
+  days = 30
 )
 
 rebuild_vignettes(universe = "jeroen")
