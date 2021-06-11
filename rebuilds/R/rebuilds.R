@@ -80,6 +80,17 @@ delete_one <- function(universe, pkg){
   stopifnot(out$Package == pkg)
 }
 
+delete_old_builds <- function(before = '2021-03-01'){
+  checks <- jsonlite::stream_in(url('https://r-universe.dev/stats/checks?limit=9999999'), verbose = FALSE)
+  checks$builddate <- structure(sapply(checks$runs, function(df){df$builder$date[1]}), class = class(Sys.time()))
+  oldies <- checks[checks$builddate < before & checks$user != 'hrbrmstr_gitlab.com',]
+  for(i in seq_along(oldies$user)){
+    cat(sprintf("Deleting %s from %s\n", oldies$package[i], oldies$user[i]))
+    delete_one(oldies$user[i], oldies$package[i])
+    rebuild_one(paste0('r-universe/', oldies$user[i]), oldies$package[i])
+  }
+}
+
 #' @import gert
 package_stats <- function(monorepo){
   repo <- git_clone(monorepo, tempfile())
