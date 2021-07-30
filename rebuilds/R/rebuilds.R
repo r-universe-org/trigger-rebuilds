@@ -69,7 +69,8 @@ rebuild_missing_binaries <- function(universe = 'ropensci'){
 #' @export
 #' @rdname rebuilds
 cancel_queued_builds <- function(universe = 'ropensci'){
-  runs <- gh::gh(sprintf('/repos/r-universe/%s/actions/runs', universe), status = 'queued', .limit = 100)
+  # limit here looks at .limit most recent runs, and then filters by status. So it needs to be high.
+  runs <- gh::gh(sprintf('/repos/r-universe/%s/actions/runs', universe), status = 'queued', .limit = 1000)
   lapply(runs$workflow_runs, function(run){
     cat("Cancelling build", run$id, "in", universe, "\n")
     url <- sprintf('/repos/r-universe/%s/actions/runs/%d/cancel', universe, run$id)
