@@ -68,6 +68,15 @@ rebuild_missing_binaries <- function(universe = 'ropensci'){
 
 #' @export
 #' @rdname rebuilds
+rebuild_all_missing_binaries <- function(){
+  orgstats <- jsonlite::stream_in(url('https://r-universe.dev/stats/organizations'), verbose = FALSE)
+  lapply(rev(orgstats$organization), function(orgname){
+    rebuild_missing_binaries(orgname)
+  })
+}
+
+#' @export
+#' @rdname rebuilds
 cancel_queued_builds <- function(universe = 'ropensci'){
   # limit here looks at .limit most recent runs, and then filters by status. So it needs to be high.
   runs <- gh::gh(sprintf('/repos/r-universe/%s/actions/runs', universe), status = 'queued', .limit = 1000)

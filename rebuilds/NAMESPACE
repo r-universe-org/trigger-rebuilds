@@ -3,6 +3,7 @@
 export(cancel_all_queued_builds)
 export(cancel_queued_builds)
 export(delete_one)
+export(rebuild_all_missing_binaries)
 export(rebuild_all_remotes)
 export(rebuild_missing_binaries)
 export(rebuild_oldies)
