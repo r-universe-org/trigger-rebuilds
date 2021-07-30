@@ -5,6 +5,7 @@
 \alias{rebuild_vignettes}
 \alias{rebuild_oldies}
 \alias{rebuild_missing_binaries}
+\alias{cancel_queued_builds}
 \alias{delete_one}
 \alias{rebuild_all_remotes}
 \alias{rebuild_universe_remotes_only}
@@ -21,6 +22,8 @@ rebuild_vignettes(universe = "jeroen")
 rebuild_oldies(universe, before = "2021-03-14")
 
 rebuild_missing_binaries(universe = "ropensci")
+
+cancel_queued_builds(repository)
 
 delete_one(universe, pkg)
 
