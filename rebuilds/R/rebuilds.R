@@ -79,6 +79,16 @@ cancel_queued_builds <- function(universe = 'ropensci'){
 
 #' @export
 #' @rdname rebuilds
+cancel_all_queued_builds <- function(){
+  universes <- gh::gh('/orgs/r-universe/repos', .limit = Inf)
+  lapply(universes, function(universe){
+    cat("Looking for queued builds in:", universe$name, "\n")
+    cancel_queued_builds(universe$name)
+  })
+}
+
+#' @export
+#' @rdname rebuilds
 #' @param pkg name of package to delete
 delete_one <- function(universe, pkg){
   userpwd <- Sys.getenv("CRANLIKEPWD", NA)
