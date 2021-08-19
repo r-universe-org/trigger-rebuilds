@@ -60,7 +60,10 @@ rebuild_missing_binaries <- function(universe = 'ropensci'){
   endpoint <- sprintf('https://%s.r-universe.dev', universe)
   packages <- jsonlite::stream_in(url(paste0(endpoint, '/src/contrib')), verbose = FALSE)
   macos <- jsonlite::stream_in(url(paste0(endpoint, '/bin/macosx/contrib/4.1')), verbose = FALSE)
-  missing <- which(!paste(packages$Package, packages$Version) %in% paste(macos$Package, macos$Version))
+  windows <- jsonlite::stream_in(url(paste0(endpoint, '/bin/windows/contrib/4.1')), verbose = FALSE)
+  missing_mac <- which(!paste(packages$Package, packages$Version) %in% paste(macos$Package, macos$Version))
+  missing_win <- which(!paste(packages$Package, packages$Version) %in% paste(windows$Package, windows$Version))
+  missing <- unique(c(missing_mac, missing_win))
   sapply(packages$Package[missing], function(pkg){
     rebuild_one(paste0('r-universe/', universe), pkg)
   })
