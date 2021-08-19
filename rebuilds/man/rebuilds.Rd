@@ -6,6 +6,7 @@
 \alias{rebuild_oldies}
 \alias{rebuild_missing_binaries}
 \alias{rebuild_missing_sources}
+\alias{rebuild_all_missing_sources}
 \alias{rebuild_all_missing_binaries}
 \alias{cancel_queued_builds}
 \alias{cancel_all_queued_builds}
@@ -27,6 +28,8 @@ rebuild_oldies(universe, before = "2021-03-14")
 rebuild_missing_binaries(universe = "ropensci")
 
 rebuild_missing_sources(universe = "ropensci")
+
+rebuild_all_missing_sources()
 
 rebuild_all_missing_binaries()
 

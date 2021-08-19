@@ -73,11 +73,22 @@ rebuild_missing_binaries <- function(universe = 'ropensci'){
 #' @rdname rebuilds
 rebuild_missing_sources <- function(universe = 'ropensci'){
   available <- jsonlite::fromJSON(sprintf('https://%s.r-universe.dev/packages', universe))
-  all <- jsonlite::fromJSON(sprintf('https://raw.githubusercontent.com/r-universe/%s/master/.metadata.json', universe))
-  packages <- all$package
-  missing <- packages[!(packages %in% available)]
-  sapply(missing, function(pkg){
-    rebuild_one(paste0('r-universe/', universe), pkg)
+  try({
+    all <- jsonlite::fromJSON(sprintf('https://raw.githubusercontent.com/r-universe/%s/master/.metadata.json', universe))
+    packages <- all$package
+    missing <- packages[!(packages %in% available)]
+    sapply(missing, function(pkg){
+      rebuild_one(paste0('r-universe/', universe), pkg)
+    })
+  })
+}
+
+#' @export
+#' @rdname rebuilds
+rebuild_all_missing_sources <- function(){
+  orgstats <- jsonlite::stream_in(url('https://r-universe.dev/stats/organizations'), verbose = FALSE)
+  lapply(rev(orgstats$organization), function(orgname){
+    rebuild_missing_sources(orgname)
   })
 }
 
